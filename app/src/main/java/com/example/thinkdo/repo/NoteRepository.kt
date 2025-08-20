@@ -1,6 +1,6 @@
 package com.example.thinkdo.repo
 
-import com.example.thinkdo.database.NoteDao
+import com.example.thinkdo.dao.NoteDao
 import com.example.thinkdo.model.Note
 import kotlinx.coroutines.flow.Flow
 

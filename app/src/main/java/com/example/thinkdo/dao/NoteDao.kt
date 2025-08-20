@@ -1,4 +1,4 @@
-package com.example.thinkdo.database
+package com.example.thinkdo.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -18,7 +18,7 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE id = :id LIMIT 1")
     fun getById(id: Int): Flow<Note>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insert(note: Note): Long
 
     @Update

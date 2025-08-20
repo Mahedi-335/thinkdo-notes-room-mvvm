@@ -1,19 +1,18 @@
-package com.example.thinkdo.viewmodel
-
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import android.content.Context
 import com.example.thinkdo.database.NoteDatabase
 import com.example.thinkdo.repo.NoteRepository
 
-class VMFactory (context: Context) : ViewModelProvider.Factory {
-    private val repo = NoteRepository(NoteDatabase.get(context).noteDao())
+class VMFactory(private val context: Context) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)){
+        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
+            val noteDao = NoteDatabase.get(context).noteDao()
+            val repository = NoteRepository(noteDao)
             @Suppress("UNCHECKED_CAST")
-            return NoteViewModel(repo) as T
+            return NoteViewModel(repository) as T
         }
-        throw IllegalArgumentException("Unknown VM class")
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
