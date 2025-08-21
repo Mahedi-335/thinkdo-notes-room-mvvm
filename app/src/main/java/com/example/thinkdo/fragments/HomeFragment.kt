@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
 
         adapter = NoteAdapter { note: Note ->
-            val action = HomeFragmentDirections.actionHomeFragmentToEditFragment(note.id)
+            val action = HomeFragmentDirections.actionHomeFragmentToEditFragment(note.id.toLong())
             findNavController().navigate(action)
         }
 

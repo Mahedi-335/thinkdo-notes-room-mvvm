@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_edit">
         <argument
             android:name="itemId"
-            app:argType="integer" />
+            app:argType="long" />
     </fragment>
 
 </navigation>
