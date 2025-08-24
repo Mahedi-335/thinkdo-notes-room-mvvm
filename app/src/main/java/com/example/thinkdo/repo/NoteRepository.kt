@@ -8,7 +8,7 @@ class NoteRepository(private val dao: NoteDao) {
 
     fun getAll(): Flow<List<Note>> = dao.getAll()
 
-    fun getByID(id: Int): Flow<Note> = dao.getById(id)
+    fun getNoteByID(id: Long): Flow<Note> = dao.getNoteById(id)
 
     suspend fun insert(note: Note) = dao.insert(note)
 

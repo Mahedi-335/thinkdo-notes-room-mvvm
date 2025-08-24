@@ -9,8 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.thinkdo.databinding.FragmentEditBinding
-import com.example.thinkdo.viewmodel.NoteViewModel
-import com.example.thinkdo.viewmodel.VMFactory
+import com.example.thinkdo.fragments.EditFragmentArgs
 import kotlinx.coroutines.launch
 
 class EditFragment : Fragment() {
@@ -35,7 +34,7 @@ class EditFragment : Fragment() {
         val noteId = args.itemId
 
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getNoteById(noteId).collect { note ->
                 if (note != null) {
                     b.titleEditText.setText(note.title)
@@ -56,7 +55,7 @@ class EditFragment : Fragment() {
             val color = 0
 
             viewModel.upsert(
-                id = noteId,
+                id = 0,
                 title = title,
                 content = content,
                 category = category,

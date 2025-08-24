@@ -12,8 +12,11 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
     val notes: StateFlow<List<Note>> =
         repo.getAll().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    // ✅ Add this
+    fun getNoteById(id: Long) = repo.getNoteByID(id)
+
     fun upsert(
-        id: Int? = 0,
+        id: Long? = 0,
         title: String,
         content: String,
         category: String,
@@ -21,18 +24,19 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
         isPinned: Boolean
     ) = viewModelScope.launch {
 
-        if (id != null && id != 0) {
-
-            repo.getByID(id).collect { oldNote ->
-                val updatedNote = oldNote.copy(
-                    title = title,
-                    content = content,
-                    category = category,
-                    color = color,
-                    isPinned = isPinned,
-                    updateAt = System.currentTimeMillis()
-                )
-                repo.update(updatedNote)
+        if (id != null && id != 0L) {
+            repo.getNoteByID(id).collect { oldNote ->
+                if (oldNote != null) {
+                    val updatedNote = oldNote.copy(
+                        title = title,
+                        content = content,
+                        category = category,
+                        color = color,
+                        isPinned = isPinned,
+                        updateAt = System.currentTimeMillis()
+                    )
+                    repo.update(updatedNote)
+                }
             }
         } else {
             val newNote = Note(
@@ -45,6 +49,7 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
             repo.insert(newNote)
         }
     }
+
 
     fun delete(note: Note) = viewModelScope.launch { repo.delete(note) }
 }
