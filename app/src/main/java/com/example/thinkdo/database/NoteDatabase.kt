@@ -8,10 +8,10 @@ import androidx.room.RoomDatabase
 import com.example.thinkdo.model.Note
 
 
-@Database(entities = [Note::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class], version = 3, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 
-    // Connect com.example.thinkdo.dao.NoteDao
+
     abstract fun noteDao(): NoteDao
 
     companion object {

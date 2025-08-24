@@ -19,7 +19,6 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
         id: Long? = 0,
         title: String,
         content: String,
-        category: String,
         color: Int,
         isPinned: Boolean
     ) = viewModelScope.launch {
@@ -30,7 +29,6 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
                     val updatedNote = oldNote.copy(
                         title = title,
                         content = content,
-                        category = category,
                         color = color,
                         isPinned = isPinned,
                         updateAt = System.currentTimeMillis()
@@ -42,7 +40,6 @@ class NoteViewModel(private val repo: NoteRepository) : ViewModel() {
             val newNote = Note(
                 title = title,
                 content = content,
-                category = category,
                 color = color,
                 isPinned = isPinned
             )

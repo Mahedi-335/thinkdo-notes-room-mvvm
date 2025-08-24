@@ -16,8 +16,6 @@ data class Note(
     val title: String,
     // Note Content
     val content: String,
-    // Select which category note is it
-    val category: String,
     // Select Note color
     val color: Int,
     // Check note is pinned or not

@@ -19,7 +19,6 @@ class NoteAdapter(private val onClick: (Note) -> Unit) :
 
     inner class NoteViewHolder(private val b: ItemNoteBinding) : RecyclerView.ViewHolder(b.root) {
         fun bind(note: Note) = with(b) {
-            categoryText.text = note.category
             titleText.text = note.title
             contentText.text = note.content
             (root as View).background?.setTint(note.color)

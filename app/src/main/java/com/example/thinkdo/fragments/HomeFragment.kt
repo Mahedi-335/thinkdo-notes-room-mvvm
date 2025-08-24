@@ -6,64 +6,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thinkdo.adapter.NoteAdapter
 import com.example.thinkdo.databinding.FragmentHomeBinding
-import com.example.thinkdo.model.Note
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private var _b: FragmentHomeBinding? = null
-    private val b get() = _b!!
-
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: NoteViewModel by viewModels { VMFactory(requireContext()) }
-
 
     private lateinit var adapter: NoteAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _b = FragmentHomeBinding.inflate(inflater, container, false)
-        return b.root
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        adapter = NoteAdapter { note: Note ->
-            val action = HomeFragmentDirections.actionHomeFragmentToEditFragment(note.id.toLong())
-            findNavController().navigate(action)
+        adapter = NoteAdapter { note ->
+            Toast.makeText(requireContext(), "Clicked: ${note.title}", Toast.LENGTH_SHORT).show()
         }
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
 
-
-        b.recyclerView.adapter = adapter
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.notes.collect { notes ->
-                adapter.submitList(notes)
+        lifecycleScope.launch {
+            viewModel.notes.collectLatest { notes ->
+                adapter.submitList(notes) // RecyclerView এ নোট দেখাবে
             }
         }
 
-
-        b.floatingButton.setOnClickListener {
+        binding.floatingButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddFragment()
             findNavController().navigate(action)
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
-        _b = null
+        _binding = null
     }
 }

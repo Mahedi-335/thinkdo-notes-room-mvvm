@@ -51,14 +51,12 @@ class EditFragment : Fragment() {
             val title = b.titleEditText.text.toString()
             val content = b.contentEditText.text.toString()
             val isPinned = b.swPin.isChecked
-            val category = "Uncategorized"
             val color = 0
 
             viewModel.upsert(
                 id = 0,
                 title = title,
                 content = content,
-                category = category,
                 color = color,
                 isPinned = isPinned
             )
