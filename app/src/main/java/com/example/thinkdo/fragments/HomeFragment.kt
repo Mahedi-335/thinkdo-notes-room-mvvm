@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.notes.collectLatest { notes ->
-                adapter.submitList(notes) // RecyclerView এ নোট দেখাবে
+                adapter.submitList(notes)
             }
         }
 
