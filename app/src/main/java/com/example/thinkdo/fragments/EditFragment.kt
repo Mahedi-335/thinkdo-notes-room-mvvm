@@ -1,3 +1,7 @@
+package com.example.thinkdo.fragments
+
+import NoteViewModel
+import VMFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +24,8 @@ class EditFragment : Fragment() {
     private val args: EditFragmentArgs by navArgs()
     private val viewModel: NoteViewModel by viewModels { VMFactory(requireContext()) }
 
+    private var currentNoteId: Long = 0L
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +43,9 @@ class EditFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getNoteById(noteId).collect { note ->
                 if (note != null) {
+                    currentNoteId = note.id.toLong()
                     b.titleEditText.setText(note.title)
                     b.contentEditText.setText(note.content)
-                    b.swPin.isChecked = note.isPinned
                 } else {
                     Toast.makeText(requireContext(), "Note not found", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
@@ -47,14 +53,14 @@ class EditFragment : Fragment() {
             }
         }
 
-        b.btnEdit.setOnClickListener {
+        b.editButton.setOnClickListener {
             val title = b.titleEditText.text.toString()
             val content = b.contentEditText.text.toString()
-            val isPinned = b.swPin.isChecked
             val color = 0
+            val isPinned = false
 
             viewModel.upsert(
-                id = 0,
+                id = currentNoteId,
                 title = title,
                 content = content,
                 color = color,

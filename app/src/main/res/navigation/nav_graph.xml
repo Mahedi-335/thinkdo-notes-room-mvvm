@@ -22,13 +22,13 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.thinkdo.fragments.AddFragment"
-        android:label="fragment_add"
+        android:label="Add Note"
         tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/editFragment"
         android:name="com.example.thinkdo.fragments.EditFragment"
-        android:label="fragment_edit"
+        android:label="Edit Note"
         tools:layout="@layout/fragment_edit">
         <argument
             android:name="itemId"

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="16dp"
-    android:layout_marginTop="45dp"
     tools:context=".fragments.AddFragment">
 
     <LinearLayout
@@ -38,12 +37,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/content_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:gravity="top"
-                android:minLines="12"
                 android:textColor="@color/black"
                 android:textSize="19sp"
+                android:minLines="12"
+                android:gravity="top"
                 android:textStyle="normal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,18 +50,20 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            >
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_button"
                 android:layout_width="125dp"
                 android:layout_height="55dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
                 android:layout_marginHorizontal="20dp"
                 android:text="Save"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                />
 
         </RelativeLayout>
 

@@ -54,11 +54,6 @@ class AddFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please add title or content", Toast.LENGTH_SHORT).show()
             }
         }
-
-        // Back button listener
-        binding.back.setOnClickListener {
-            findNavController().popBackStack()
-        }
     }
 
     override fun onDestroyView() {

@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thinkdo.model.Note
 import com.example.thinkdo.databinding.ItemNoteBinding
 
-class NoteAdapter(private val onClick: (Note) -> Unit) :
-    ListAdapter<Note, NoteAdapter.NoteViewHolder>(DIFF) {
+class NoteAdapter(
+    private val onClick: (Note) -> Unit,
+    private val onLongClick: (Note) -> Unit
+) : ListAdapter<Note, NoteAdapter.NoteViewHolder>(DIFF) {
 
     object DIFF : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note) = oldItem.id == newItem.id
@@ -21,10 +23,20 @@ class NoteAdapter(private val onClick: (Note) -> Unit) :
         fun bind(note: Note) = with(b) {
             titleText.text = note.title
             contentText.text = note.content
-            (root as View).background?.setTint(note.color)
+
+            val bgColor = if (note.color !=0)note.color else android.graphics.Color.WHITE
+            root.setBackgroundColor(bgColor)
+
+
             root.setOnClickListener { onClick(note) }
+
+            itemView.setOnLongClickListener {
+                onLongClick(note)
+                true
+            }
         }
     }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,5 +46,6 @@ class NoteAdapter(private val onClick: (Note) -> Unit) :
         return NoteViewHolder(b)
     }
 
-    override fun onBindViewHolder(holder: NoteAdapter.NoteViewHolder, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: NoteAdapter.NoteViewHolder, position: Int) =
+        holder.bind(getItem(position))
 }
