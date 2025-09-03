@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.thinkdo.databinding.ActivityMainBinding
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,12 +20,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView)
+            .hide(WindowInsetsCompat.Type.statusBars())
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        setSupportActionBar(binding.toolbar)
 
 
         val navHostFragment =
@@ -34,21 +38,5 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment
             )
         )
-
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        navController.addOnDestinationChangedListener { _,destination, _ ->
-            if (destination.id == R.id.homeFragment){
-                binding.toolbar.visibility = android.view.View.GONE
-            }else{
-                binding.toolbar.visibility = android.view.View.VISIBLE
-            }
-        }
-    }
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
